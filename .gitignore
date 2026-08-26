@@ -13,3 +13,4 @@
 *.pem
 *.key
 *.pfx
+friends.json
