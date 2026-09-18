@@ -164,6 +164,7 @@ func main() {
 	// responding" shape) traced back to this: MPS was on ACNH's branch of this fork instead
 	// of MK8/SSBU's. Reverting to the proven MK8/SSBU default for both.
 	mm.PublicStationFirst = false
+	mm.PreservePiaStationIdentity = true
 	mm.JoinRespExistingCount = false
 	// FriendPIDs/FriendName/OnFriendSessionCreated: the "Join Room" screen polls
 	// FindMatchmakeSessionByGatheringIdDetail (method 41) against a gid it gets from friend
@@ -181,6 +182,7 @@ func main() {
 	if !legacyPia() {
 		scCfg = nex.SwitchPia519Config()
 	}
+	scCfg.PreservePiaStationIdentity = true
 	secureEndpoint.Register(nex.ProtocolSecureConnection, nex.SecureConnectionHandlerWithConfig(scCfg))
 	secureEndpoint.Register(nex.ProtocolMatchmakeExtension, mm.ExtensionHandler())
 	secureEndpoint.Register(nex.ProtocolMatchMaking, mm.MatchMakingHandler())
