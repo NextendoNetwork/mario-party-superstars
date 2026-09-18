@@ -10,6 +10,7 @@ package main
 
 import (
 	"crypto/subtle"
+	"encoding/hex"
 	"encoding/json"
 	"fmt"
 	"net/http"
@@ -391,6 +392,23 @@ func startDashboard(endpoint *nex.Endpoint, mm *nex.Matchmaking) {
 			return
 		}
 		_ = json.NewEncoder(w).Encode(map[string]any{"reaped": endpoint.ReapIdle(nex.ReapIdleTimeout())})
+	})
+	// /api/session-key — the mesh key a gathering's players encrypt their P2P traffic with,
+	// so a captured session can be decoded offline. Token-gated like every other route, and
+	// only ever readable for a gathering this server itself issued the key for.
+	mux.HandleFunc("/api/session-key", func(w http.ResponseWriter, r *http.Request) {
+		if !authed(w, r) {
+			return
+		}
+		w.Header().Set("Content-Type", "application/json")
+		w.Header().Set("Cache-Control", "no-store")
+		gid, err := strconv.ParseUint(r.URL.Query().Get("gid"), 10, 32)
+		if err != nil || gid == 0 {
+			http.Error(w, "gid required", http.StatusBadRequest)
+			return
+		}
+		key, ok := mm.SessionKeyForGID(uint32(gid))
+		_ = json.NewEncoder(w).Encode(map[string]any{"gid": gid, "found": ok, "key": hex.EncodeToString(key)})
 	})
 	mux.HandleFunc("/healthz", func(w http.ResponseWriter, r *http.Request) { fmt.Fprintln(w, "ok") })
 	registerAccountEndpoints(mux)

@@ -2,7 +2,7 @@ module github.com/NextendoNetwork/mario-party-superstars
 
 go 1.23.0
 
-require github.com/NextendoNetwork/nextendo-nex v0.2.3-0.20260918092045-6eca01a7bda2
+require github.com/NextendoNetwork/nextendo-nex v0.2.3-0.20260918100655-a64d539c5b32
 
 require (
 	github.com/klauspost/compress v1.17.9 // indirect

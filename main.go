@@ -164,7 +164,9 @@ func main() {
 	// responding" shape) traced back to this: MPS was on ACNH's branch of this fork instead
 	// of MK8/SSBU's. Reverting to the proven MK8/SSBU default for both.
 	mm.PublicStationFirst = false
-	mm.PreservePiaStationIdentity = true
+	// MPS_PRESERVE_IDENTITY=0 puts MPS back on the shared NAT bridge every other title uses
+	// (the observed UDP port), instead of republishing the identity the client registered.
+	mm.PreservePiaStationIdentity = preservePiaIdentity()
 	mm.JoinRespExistingCount = false
 	// FriendPIDs/FriendName/OnFriendSessionCreated: the "Join Room" screen polls
 	// FindMatchmakeSessionByGatheringIdDetail (method 41) against a gid it gets from friend
@@ -182,7 +184,7 @@ func main() {
 	if !legacyPia() {
 		scCfg = nex.SwitchPia519Config()
 	}
-	scCfg.PreservePiaStationIdentity = true
+	scCfg.PreservePiaStationIdentity = preservePiaIdentity()
 	secureEndpoint.Register(nex.ProtocolSecureConnection, nex.SecureConnectionHandlerWithConfig(scCfg))
 	secureEndpoint.Register(nex.ProtocolMatchmakeExtension, mm.ExtensionHandler())
 	secureEndpoint.Register(nex.ProtocolMatchMaking, mm.MatchMakingHandler())
@@ -386,6 +388,10 @@ func logRMC(tag string) func(*nex.Connection, *nex.RMCMessage) {
 	return func(c *nex.Connection, req *nex.RMCMessage) {
 		fmt.Printf("[MPS %s] pid=%d proto=%#x method=%d call=%d\n", tag, c.PID, req.Protocol, req.Method, req.CallID)
 	}
+}
+
+func preservePiaIdentity() bool {
+	return envOr("MPS_PRESERVE_IDENTITY", "1") != "0"
 }
 
 func envOr(key, def string) string {
