@@ -186,7 +186,7 @@ func main() {
 	}
 	scCfg.PreservePiaStationIdentity = preservePiaIdentity()
 	secureEndpoint.Register(nex.ProtocolSecureConnection, nex.SecureConnectionHandlerWithConfig(scCfg))
-	secureEndpoint.Register(nex.ProtocolMatchmakeExtension, mm.ExtensionHandler())
+	secureEndpoint.Register(nex.ProtocolMatchmakeExtension, mpsExtensionHandler(mm))
 	secureEndpoint.Register(nex.ProtocolMatchMaking, mm.MatchMakingHandler())
 	secureEndpoint.Register(nex.ProtocolMatchMakingExt, mm.MatchMakingExtHandler())
 	secureEndpoint.Register(nex.ProtocolNATTraversal, nex.NATTraversalHandler())

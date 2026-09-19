@@ -6,17 +6,16 @@ import (
 	nex "github.com/NextendoNetwork/nextendo-nex"
 )
 
-// mpsIntegerSettings1 / mpsIntegerSettings2 -- placeholder values, NOT confirmed against a
-// real MPS client (no reference server exists for this title, unlike SMB35/kinnay). Ported
-// the SHAPE from kinnay/SMB35's source/config.py (same NEX-era title, same generic Utility
-// protocol) as a starting point since an empty map is now confirmed wrong for this class of
-// title -- our own generic nex.UtilityHandler() was misreading the request entirely (treating
-// the request's single index parameter as a list-length, per kinnay's NintendoClients wiki
-// Utility-Protocol page: GetIntegerSettings takes ONE Uint32 "integerSettingIndex" and returns
-// Map<Uint16,Sint32>, not a List). Confirmed real bug in the shared library, not MPS-specific;
-// this stub works around it here pending a proper library fix.
+// Utility index 0 keys 0..3 are MPS RTT limits in milliseconds, not the
+// unrelated SMB35 settings previously used here. MPS 1.1.1 loads these in
+// FUN_001508d0; hs::Net::ResetRttParameter (0x0014ff44, analysis image base
+// 0x100000) supplies the defaults below. Key 0 is the disconnect/warning
+// cutoff: FUN_00151324 leaves after every remote station exceeds it for
+// five seconds. Keys 1, 2, 3 are the descending signal-bar thresholds.
+// The old 60 ms cutoff disconnected healthy WAN sessions while LAN worked.
+// Keys 4..16 remain the existing placeholders; their values are not verified.
 var mpsIntegerSettings1 = map[uint16]int32{
-	0: 60, 1: 30, 2: 90, 3: 1, 4: 0, 5: 0, 6: 0, 7: 0,
+	0: 1000, 1: 1000, 2: 500, 3: 250, 4: 0, 5: 0, 6: 0, 7: 0,
 	8: 0, 9: 0, 10: 5, 11: 3, 12: 1, 13: 30, 14: 30, 15: 180, 16: 0,
 }
 

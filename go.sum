@@ -10,6 +10,8 @@ github.com/NextendoNetwork/nextendo-nex v0.2.3-0.20260918100655-a64d539c5b32 h1:
 github.com/NextendoNetwork/nextendo-nex v0.2.3-0.20260918100655-a64d539c5b32/go.mod h1:HW1+OvhwLp+lhNtt8ohJOq3156UlJLlJSPcfrhlprj8=
 github.com/NextendoNetwork/nextendo-nex v0.2.3-0.20260918101141-613261ff6d10 h1:K0BdiWYpq9SZwQ0uddFUjcA6GKOeUIvuiMM0RadmThs=
 github.com/NextendoNetwork/nextendo-nex v0.2.3-0.20260918101141-613261ff6d10/go.mod h1:HW1+OvhwLp+lhNtt8ohJOq3156UlJLlJSPcfrhlprj8=
+github.com/NextendoNetwork/nextendo-nex v0.2.3-0.20260918205359-06b88072d15d h1:ZqY/AedQvtrFuU15bZ39s2pzvu/OMnSQQhwL2qBpp9U=
+github.com/NextendoNetwork/nextendo-nex v0.2.3-0.20260918205359-06b88072d15d/go.mod h1:HW1+OvhwLp+lhNtt8ohJOq3156UlJLlJSPcfrhlprj8=
 github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c=
 github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/gorilla/websocket v1.5.3 h1:saDtZ6Pbx/0u+bgYQ3q96pZgCzfhKXGPqt7kZ72aNNg=
